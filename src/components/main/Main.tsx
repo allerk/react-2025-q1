@@ -2,6 +2,7 @@ import { Component } from 'react';
 import './Main.css';
 import { Header } from '../top-controls/header/Header.tsx';
 import { Search } from '../top-controls/search/Search.tsx';
+import { Results } from '../results/Results.tsx';
 
 export class Main extends Component {
   render() {
@@ -11,7 +12,7 @@ export class Main extends Component {
           <Search />
         </Header>
         <div className="split-line"></div>
-        <section className="card-list-section">CardList</section>
+        <Results></Results>
       </div>
     );
   }
