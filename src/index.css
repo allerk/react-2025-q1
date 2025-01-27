@@ -1,6 +1,5 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-main {
-    background-color: #c9c1c1;
-    height: 100vh;
+html {
+  background-color: #c9c1c1;
 }
