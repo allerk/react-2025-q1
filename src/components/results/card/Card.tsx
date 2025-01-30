@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, ReactNode } from 'react';
 import picturePlaceholder from '../../../images/picture-placeholder.jpg';
 import './Card.css';
 import { CharacterInfo } from '../../../domain/IApiResponse.ts';
@@ -8,7 +8,7 @@ interface IProps {
 }
 
 export class Card extends Component<IProps> {
-  render() {
+  render(): ReactNode {
     const { item } = this.props;
     return (
       <li className="card">

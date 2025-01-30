@@ -1,5 +1,4 @@
-import { Component, ReactNode } from 'react';
-import * as React from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 
 interface IState {
   hasError: boolean;
@@ -15,15 +14,15 @@ export class ErrorBoundary extends Component<IProps, IState> {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError() {
+  static getDerivedStateFromError(): IState {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     console.error(error, errorInfo);
   }
 
-  render() {
+  render(): ReactNode {
     if (this.state.hasError) {
       return (
         <div>

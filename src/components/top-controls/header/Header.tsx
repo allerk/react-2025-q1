@@ -6,7 +6,7 @@ interface IProps {
 }
 
 export class Header extends Component<IProps> {
-  render() {
+  render(): ReactNode {
     const { children } = this.props;
     return (
       <header className="header-section">

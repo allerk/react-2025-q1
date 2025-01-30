@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, ReactNode } from 'react';
 import { Card } from '../card/Card.tsx';
 import './CardList.css';
 import { CharacterInfo } from '../../../domain/IApiResponse.ts';
@@ -8,7 +8,7 @@ interface IProps {
 }
 
 export class CardList extends Component<IProps> {
-  render() {
+  render(): ReactNode {
     const { results } = this.props;
     return (
       <ul className="flex justify-center items-stretch flex-wrap">

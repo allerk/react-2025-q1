@@ -7,7 +7,7 @@ interface IProps {
 }
 
 export class Loader extends Component<IProps, unknown> {
-  render() {
+  render(): ReactNode {
     const { isLoading, children } = this.props;
     if (isLoading) {
       return (
