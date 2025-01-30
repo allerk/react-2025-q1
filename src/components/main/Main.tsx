@@ -5,6 +5,7 @@ import { Search } from '../top-controls/search/Search.tsx';
 import { Results } from '../results/Results.tsx';
 import { CharacterInfo, PaginatedResponse } from '../../domain/IApiResponse.ts';
 import getDataFromApi from '../../services/getDataFromApi.ts';
+import { CardList } from '../results/card-list/CardList.tsx';
 
 interface IState {
   results: CharacterInfo[];
@@ -37,7 +38,9 @@ export class Main extends Component<unknown, IState> {
           <Search handleSearch={this.handleSearch} />
         </Header>
         <div className="split-line"></div>
-        <Results></Results>
+        <Results>
+          <CardList results={this.state.results}></CardList>
+        </Results>
       </div>
     );
   }
