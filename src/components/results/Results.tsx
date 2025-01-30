@@ -9,13 +9,29 @@ interface IProps {
   isStart: boolean;
 }
 
-export class Results extends Component<IProps> {
-  render() {
+interface IState {
+  throwError: boolean;
+}
+
+export class Results extends Component<IProps, IState> {
+  state = {
+    throwError: false,
+  };
+
+  throwError = (): void => {
+    this.setState({ throwError: true });
+  };
+
+  render(): ReactNode {
+    if (this.state.throwError) {
+      throw new Error('I crashed!');
+    }
+
     const { children, isFound, isLoading, isStart } = this.props;
     return (
       <section className="items-start justify-center">
-        <Loader isLoading={isLoading}>
-          <div className="md:container md:mx-auto">
+        <div className="md:container md:mx-auto">
+          <Loader isLoading={isLoading}>
             {isFound ? (
               children
             ) : !isLoading && !isStart ? (
@@ -23,8 +39,16 @@ export class Results extends Component<IProps> {
                 <p>Nothing was found. Try again!</p>
               </div>
             ) : null}
+          </Loader>
+          <div className="flex justify-end">
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+              onClick={this.throwError}
+            >
+              Throw error
+            </button>
           </div>
-        </Loader>
+        </div>
       </section>
     );
   }
