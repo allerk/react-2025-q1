@@ -7,6 +7,7 @@ interface IProps {
   isFound: boolean;
   isLoading: boolean;
   isStart: boolean;
+  serverError: string | null;
 }
 
 interface IState {
@@ -27,12 +28,16 @@ export class Results extends Component<IProps, IState> {
       throw new Error('I crashed!');
     }
 
-    const { children, isFound, isLoading, isStart } = this.props;
+    const { children, isFound, isLoading, isStart, serverError } = this.props;
     return (
       <section className="items-start justify-center">
         <div className="md:container md:mx-auto">
           <Loader isLoading={isLoading}>
-            {isFound ? (
+            {serverError ? (
+              <div className="flex justify-center">
+                <p>{serverError}</p>
+              </div>
+            ) : isFound ? (
               children
             ) : !isLoading && !isStart ? (
               <div className="flex justify-center">
