@@ -6,7 +6,7 @@ import {
 } from '../../../services/storage.ts';
 
 interface IProps {
-  handleSearch: (searchTerm?: string) => void;
+  handleSearch: (searchTerm: string) => void;
 }
 
 interface IState {
