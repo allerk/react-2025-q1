@@ -1,0 +1,20 @@
+.card {
+  background-color: #57ace5;
+  border-radius: 5px 5px 5px 5px;
+  width: 270px;
+  margin: 10px;
+}
+
+.card h2 {
+  padding: 10px;
+}
+
+.card p {
+  padding: 10px;
+}
+
+.card-image {
+  background-color: red;
+  height: 270px;
+  margin-bottom: 15px;
+}

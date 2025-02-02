@@ -1,7 +1,12 @@
 import { Component, ReactNode } from 'react';
+import { Main } from './components/main/Main.tsx';
 
 export class App extends Component {
   render(): ReactNode {
-    return <div className="text-blue-500">Init</div>;
+    return (
+      <main className="main">
+        <Main />
+      </main>
+    );
   }
 }
