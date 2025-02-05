@@ -1,12 +1,12 @@
 import { Component, ReactNode } from 'react';
 import './Main.css';
-import { Header } from '../top-controls/header/Header.tsx';
 import { Search } from '../top-controls/search/Search.tsx';
 import { CharacterInfo, PaginatedResponse } from '../../domain/IApiResponse.ts';
 import getDataFromApi from '../../services/getDataFromApi.ts';
 import { AxiosError, AxiosResponse } from 'axios';
 import Results from '../results/Results.tsx';
 import CardList from '../results/card-list/CardList.tsx';
+import Header from '../top-controls/header/Header.tsx';
 
 interface IState {
   results: CharacterInfo[];
