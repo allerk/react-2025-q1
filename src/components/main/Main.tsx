@@ -2,11 +2,11 @@ import { Component, ReactNode } from 'react';
 import './Main.css';
 import { Header } from '../top-controls/header/Header.tsx';
 import { Search } from '../top-controls/search/Search.tsx';
-import { Results } from '../results/Results.tsx';
 import { CharacterInfo, PaginatedResponse } from '../../domain/IApiResponse.ts';
 import getDataFromApi from '../../services/getDataFromApi.ts';
-import { CardList } from '../results/card-list/CardList.tsx';
 import { AxiosError, AxiosResponse } from 'axios';
+import Results from '../results/Results.tsx';
+import CardList from '../results/card-list/CardList.tsx';
 
 interface IState {
   results: CharacterInfo[];
