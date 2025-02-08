@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react';
 import './Results.css';
-import { Loader } from '../../common/widgets/loader/Loader.tsx';
+import Loader from '../../common/widgets/loader/Loader.tsx';
 
 interface IProps {
   children: ReactNode;

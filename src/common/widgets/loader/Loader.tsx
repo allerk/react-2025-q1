@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import './Loader.css';
 
 interface IProps {
@@ -6,17 +6,31 @@ interface IProps {
   children: ReactNode;
 }
 
-export class Loader extends Component<IProps, unknown> {
-  render(): ReactNode {
-    const { isLoading, children } = this.props;
-    if (isLoading) {
-      return (
-        <div className="md:container md:mx-auto flex justify-center h-full items-center">
-          <div className="loader"></div>
-        </div>
-      );
-    }
+// export class Loader extends Component<IProps, unknown> {
+//   render(): ReactNode {
+//     const { isLoading, children } = this.props;
+//     if (isLoading) {
+//       return (
+//         <div className="md:container md:mx-auto flex justify-center h-full items-center">
+//           <div className="loader"></div>
+//         </div>
+//       );
+//     }
+//
+//     return children;
+//   }
+// }
 
-    return children;
+const Loader = ({ isLoading, children }: IProps): ReactNode => {
+  if (isLoading) {
+    return (
+      <div className="md:container md:mx-auto flex justify-center h-full items-center">
+        <div className="loader"></div>
+      </div>
+    );
   }
-}
+
+  return children;
+};
+
+export default Loader;
