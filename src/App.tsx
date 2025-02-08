@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import { Main } from './components/main/Main.tsx';
+import Main from './components/main/Main.tsx';
 
 export class App extends Component {
   render(): ReactNode {
