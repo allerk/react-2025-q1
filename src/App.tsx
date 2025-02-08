@@ -1,12 +1,12 @@
-import { Component, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import Main from './components/main/Main.tsx';
 
-export class App extends Component {
-  render(): ReactNode {
-    return (
-      <main className="main">
-        <Main />
-      </main>
-    );
-  }
-}
+const App = (): ReactNode => {
+  return (
+    <main className="main">
+      <Main />
+    </main>
+  );
+};
+
+export default App;
