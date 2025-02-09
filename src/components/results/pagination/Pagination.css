@@ -1,0 +1,9 @@
+.pagination-section {
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-bar {
+  background-color: white;
+  border-radius: 0.75rem;
+}

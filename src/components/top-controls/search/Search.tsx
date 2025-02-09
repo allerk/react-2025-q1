@@ -1,18 +1,13 @@
-import { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, memo, ReactNode, useState } from 'react';
 import './Search.css';
-import useLocalStorage from '../../../hooks/useLocalStorage.ts';
 
 interface IProps {
-  handleSearch: (searchTerm: string) => void;
+  storedValue: string;
+  handleChange: (value: string) => void;
 }
 
-const Search = ({ handleSearch }: IProps): ReactNode => {
-  const [storedValue, handleChange] = useLocalStorage();
+const Search = ({ storedValue, handleChange }: IProps): ReactNode => {
   const [searchTerm, setSearchTerm] = useState(storedValue);
-
-  useEffect(() => {
-    handleSearch(storedValue);
-  }, [handleSearch, storedValue]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSearchTerm(event.target.value);
@@ -47,4 +42,4 @@ const Search = ({ handleSearch }: IProps): ReactNode => {
   );
 };
 
-export default Search;
+export default memo(Search);

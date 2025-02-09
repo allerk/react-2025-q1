@@ -3,10 +3,11 @@ import { CharacterInfo, PaginatedResponse } from '../domain/IApiResponse.ts';
 import { API_URL, DEFAULT_PAGE } from '../constants/constants.ts';
 
 export const getDataFromApi = async (
-  searchTerm?: string
+  searchTerm?: string,
+  page?: string
 ): Promise<PaginatedResponse<CharacterInfo>> => {
   const params = new URLSearchParams({
-    page: DEFAULT_PAGE.toString(),
+    page: page ? page : DEFAULT_PAGE.toString(),
   });
 
   if (searchTerm) {
