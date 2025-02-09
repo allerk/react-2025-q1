@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "format:fix": "prettier --write .",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
@@ -18,11 +20,15 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "axios": "^1.7.9",
+    "gh-pages": "^6.3.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router": "^7.1.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@react-router/dev": "^7.1.5",
     "@tailwindcss/vite": "^4.0.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

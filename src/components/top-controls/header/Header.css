@@ -1,0 +1,10 @@
+.header-section {
+  height: 20vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-bar {
+  background-color: white;
+  border-radius: 0.75rem;
+}

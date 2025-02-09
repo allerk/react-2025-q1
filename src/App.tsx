@@ -1,7 +1,15 @@
-import { Component, ReactNode } from 'react';
+import { ReactNode } from 'react';
+import { Outlet } from 'react-router';
+import { ErrorBoundary } from './common/widgets/errors/ErrorBoundary.tsx';
 
-export class App extends Component {
-  render(): ReactNode {
-    return <div className="text-blue-500">Init</div>;
-  }
-}
+const App = (): ReactNode => {
+  return (
+    <ErrorBoundary>
+      <main className="main">
+        <Outlet />
+      </main>
+    </ErrorBoundary>
+  );
+};
+
+export default App;
