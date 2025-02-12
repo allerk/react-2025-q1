@@ -53,13 +53,13 @@ const Pagination = ({ pageInfo }: IProps) => {
               <button
                 id="increment"
                 className={`${
-                  pageInfo.next === null
+                  pageInfo.totalPages === currentPage
                     ? 'bg-gray-400 cursor-not-allowed'
                     : 'bg-blue-500 hover:bg-blue-700'
                 } text-white font-bold py-2 px-4 rounded-full m-2 w-full`}
                 type="submit"
                 onClick={() => handlePageChange(currentPage + 1)}
-                disabled={pageInfo.next === null}
+                disabled={pageInfo.totalPages === currentPage}
               >
                 Next
               </button>
