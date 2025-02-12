@@ -5,7 +5,7 @@ import httpClient from './httpClient.ts';
 
 const getDataFromApi = async <T>(
   isDetails: boolean,
-  value?: string | null,
+  value: string,
   page?: string | null,
   prevValue?: string | null
 ): Promise<T | null> => {

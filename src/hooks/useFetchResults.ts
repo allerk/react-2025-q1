@@ -26,9 +26,7 @@ const useFetchResults = <T>(
   const [paginationData, setPaginationData] = useState<IResult<T>>(() =>
     initState<T>()
   );
-  const prevSearch: MutableRefObject<string | null> = useRef<string | null>(
-    null
-  );
+  const prevSearch: MutableRefObject<string> = useRef<string>('');
 
   const handleSearch = useCallback(async (): Promise<void> => {
     setPaginationData((prevState: IResult<T>) => ({

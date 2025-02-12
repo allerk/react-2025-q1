@@ -2,8 +2,6 @@ import './Pagination.css';
 import { PageInfo } from '../../../domain/IApiResponse.ts';
 import { useSearchParams } from 'react-router';
 import { QueryParameters } from '../../../common/enums/query-parameters.ts';
-import { DEFAULT_PAGE } from '../../../constants/constants.ts';
-import { useEffect } from 'react';
 
 interface IProps {
   pageInfo: PageInfo;
@@ -14,13 +12,6 @@ const Pagination = ({ pageInfo }: IProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentPage: number = Number(searchParams.get(QueryParameters.PAGE));
-
-  useEffect(() => {
-    if (currentPage > pageInfo.totalPages) {
-      searchParams.set(QueryParameters.PAGE, DEFAULT_PAGE.toString());
-      setSearchParams(searchParams);
-    }
-  }, [currentPage, pageInfo, searchParams, setSearchParams]);
 
   const handlePageChange = (number: number) => {
     searchParams.set(QueryParameters.PAGE, number.toString());
