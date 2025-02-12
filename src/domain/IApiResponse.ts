@@ -6,6 +6,7 @@ export interface CharacterInfo {
   skin_color: string;
   eye_color: string;
   gender: string;
+  url: string;
 }
 
 export interface PaginatedResponse<T> {

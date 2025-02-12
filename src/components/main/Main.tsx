@@ -10,13 +10,14 @@ import useFetchResults from '../../hooks/useFetchResults.ts';
 import { useSearchParams } from 'react-router';
 import { QueryParameters } from '../../common/enums/query-parameters.ts';
 import { DEFAULT_PAGE } from '../../constants/constants.ts';
+import { CharacterInfo, PaginatedResponse } from '../../domain/IApiResponse.ts';
 
 const Main = (): ReactNode => {
   const [storedValue, handleChange] = useLocalStorage();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const currentPage = searchParams.get(QueryParameters.PAGE);
+  const currentPage: string | null = searchParams.get(QueryParameters.PAGE);
 
   useEffect(() => {
     if (!currentPage) {
@@ -25,10 +26,9 @@ const Main = (): ReactNode => {
     }
   }, [currentPage, searchParams, setSearchParams]);
 
-  const results: IResult = useFetchResults(
-    storedValue,
-    searchParams.get(QueryParameters.PAGE)
-  );
+  const results: IResult<PaginatedResponse<CharacterInfo>> = useFetchResults<
+    PaginatedResponse<CharacterInfo>
+  >(storedValue, currentPage);
 
   return (
     <div className="w-full">

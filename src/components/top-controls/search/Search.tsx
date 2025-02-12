@@ -1,5 +1,8 @@
 import { ChangeEvent, FormEvent, memo, ReactNode, useState } from 'react';
 import './Search.css';
+import { QueryParameters } from '../../../common/enums/query-parameters.ts';
+import { useSearchParams } from 'react-router';
+import { DEFAULT_PAGE } from '../../../constants/constants.ts';
 
 interface IProps {
   storedValue: string;
@@ -8,6 +11,7 @@ interface IProps {
 
 const Search = ({ storedValue, handleChange }: IProps): ReactNode => {
   const [searchTerm, setSearchTerm] = useState(storedValue);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSearchTerm(event.target.value);
@@ -16,6 +20,8 @@ const Search = ({ storedValue, handleChange }: IProps): ReactNode => {
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const processedTerm = searchTerm.trimEnd();
+    searchParams.set(QueryParameters.PAGE, DEFAULT_PAGE.toString());
+    setSearchParams(searchParams);
     handleChange(processedTerm);
   };
 

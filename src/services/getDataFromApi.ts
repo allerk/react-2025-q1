@@ -1,35 +1,38 @@
-import axios from 'axios';
-import { CharacterInfo, PaginatedResponse } from '../domain/IApiResponse.ts';
 import { API_URL, DEFAULT_PAGE } from '../constants/constants.ts';
+import { AxiosError, AxiosResponse } from 'axios';
+import { QueryParameters } from '../common/enums/query-parameters.ts';
+import httpClient from './httpClient.ts';
 
-export const getDataFromApi = async (
-  searchTerm?: string,
-  page?: string
-): Promise<PaginatedResponse<CharacterInfo>> => {
-  const params = new URLSearchParams({
-    page: page ? page : DEFAULT_PAGE.toString(),
-  });
-
-  if (searchTerm) {
-    params.append('search', searchTerm);
-  }
-
-  const apiUrl = `${API_URL}?${params}`;
-
-  const config = {
-    method: 'get',
-    url: apiUrl,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
+const getDataFromApi = async <T>(
+  searchTerm?: string | null,
+  page?: string | null,
+  prevSearch?: string | null
+): Promise<T | null> => {
   try {
-    const response = await axios(config);
-    return response.data as PaginatedResponse<CharacterInfo>;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error;
+    const params = new URLSearchParams({
+      page: page ? page : DEFAULT_PAGE.toString(),
+    });
+
+    if (searchTerm !== prevSearch) {
+      params.delete(QueryParameters.PAGE);
+      params.set(QueryParameters.PAGE, DEFAULT_PAGE.toString());
+    }
+
+    if (searchTerm) {
+      params.append('search', searchTerm);
+    }
+
+    const apiUrl = `${API_URL}?${params}`;
+
+    return await httpClient(apiUrl);
+  } catch (e) {
+    const error = e as AxiosError;
+    const response: AxiosResponse | undefined = error.response;
+    if (response && response.status >= 400) {
+      const error: string = `Star Wars API server failed. With status code ${response.status}`;
+      throw new AxiosError(error);
+    }
+    return null;
   }
 };
 

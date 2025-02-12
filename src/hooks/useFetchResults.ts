@@ -1,61 +1,52 @@
-import { useEffect, useState } from 'react';
-import { CharacterInfo, PaginatedResponse } from '../domain/IApiResponse.ts';
-import getDataFromApi from '../services/getDataFromApi.ts';
-import { AxiosError, AxiosResponse } from 'axios';
+import {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { AxiosError } from 'axios';
 import { IResult } from '../domain/IResults.ts';
+import getDataFromApi from '../services/getDataFromApi.ts';
 
-const initState: IResult = {
+const initState = <T>(): IResult<T> => ({
   paginationData: null,
   statusData: {
     isLoading: false,
     isStart: true, // is needed to prevent rendering 'not found message' at the beginning
     serverError: null,
   },
-};
+});
 
-const useFetchResults = (value: string, page?: string | null): IResult => {
-  const [paginationData, setPaginationData] = useState<IResult>(initState);
+const useFetchResults = <T>(
+  value: string,
+  page?: string | null
+): IResult<T> => {
+  const [paginationData, setPaginationData] = useState<IResult<T>>(() =>
+    initState<T>()
+  );
+  const prevSearch: MutableRefObject<string | null> = useRef<string | null>(
+    null
+  );
 
-  useEffect(() => {
-    const fetchData = async (
-      searchTerm?: string,
-      page?: string | null
-    ): Promise<PaginatedResponse<CharacterInfo> | null> => {
-      try {
-        return page
-          ? await getDataFromApi(searchTerm, page)
-          : await getDataFromApi(searchTerm);
-      } catch (e) {
-        const error = e as AxiosError;
-        const response: AxiosResponse | undefined = error.response;
-        if (response && response.status >= 400) {
-          const error: string = `Star Wars API server failed. With status code ${response.status}`;
-          setPaginationData((prevState: IResult) => ({
-            ...prevState,
-            statusData: {
-              ...prevState.statusData,
-              serverError: error,
-            },
-          }));
-        }
-        return null;
-      }
-    };
-    const handleSearch = async (): Promise<void> => {
-      setPaginationData((prevState: IResult) => ({
-        ...prevState,
-        statusData: {
-          ...prevState.statusData,
-          isLoading: true,
-          isStart: false,
-          serverError: null,
-        },
-      }));
-      const data: PaginatedResponse<CharacterInfo> | null = await fetchData(
+  const handleSearch = useCallback(async (): Promise<void> => {
+    setPaginationData((prevState: IResult<T>) => ({
+      ...prevState,
+      statusData: {
+        ...prevState.statusData,
+        isLoading: true,
+        isStart: false,
+        serverError: null,
+      },
+    }));
+    try {
+      const data: T | null = await getDataFromApi<T>(
         value,
-        page
+        page,
+        prevSearch.current
       );
-      setPaginationData((prevState: IResult) => ({
+      prevSearch.current = value;
+      setPaginationData((prevState: IResult<T>) => ({
         ...prevState,
         paginationData: data,
         statusData: {
@@ -64,11 +55,24 @@ const useFetchResults = (value: string, page?: string | null): IResult => {
           isLoading: false,
         },
       }));
-    };
-    handleSearch();
-  }, [value, page]);
+    } catch (e) {
+      const error = e as AxiosError;
+      setPaginationData((prevState: IResult<T>) => ({
+        ...prevState,
+        statusData: {
+          ...prevState.statusData,
+          isLoading: false,
+          serverError: error.message,
+        },
+      }));
+    }
+  }, [page, value]);
 
-  return paginationData as IResult;
+  useEffect(() => {
+    handleSearch();
+  }, [value, page, handleSearch]);
+
+  return paginationData as IResult<T>;
 };
 
 export default useFetchResults;
