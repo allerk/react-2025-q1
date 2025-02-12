@@ -38,14 +38,14 @@ const Main = (): ReactNode => {
       <div className="split-line"></div>
       <Results
         isFound={
-          !!results.paginationData && results.paginationData.results.length > 0
+          !!results.responseData && results.responseData.results.length > 0
         }
         isLoading={results.statusData.isLoading}
         isStart={results.statusData.isStart}
         serverError={results.statusData.serverError}
       >
-        {results.paginationData ? (
-          <CardList paginatedData={results.paginationData}></CardList>
+        {results.responseData ? (
+          <CardList responseData={results.responseData}></CardList>
         ) : null}
       </Results>
     </div>

@@ -4,27 +4,32 @@ import { QueryParameters } from '../common/enums/query-parameters.ts';
 import httpClient from './httpClient.ts';
 
 const getDataFromApi = async <T>(
-  searchTerm?: string | null,
+  isDetails: boolean,
+  value?: string | null,
   page?: string | null,
-  prevSearch?: string | null
+  prevValue?: string | null
 ): Promise<T | null> => {
   try {
-    const params = new URLSearchParams({
-      page: page ? page : DEFAULT_PAGE.toString(),
-    });
+    if (isDetails) {
+      const apiUrl = `${API_URL}${value}`;
+      return await httpClient(apiUrl);
+    } else {
+      const params = new URLSearchParams({
+        page: page ? page : DEFAULT_PAGE.toString(),
+      });
 
-    if (searchTerm !== prevSearch) {
-      params.delete(QueryParameters.PAGE);
-      params.set(QueryParameters.PAGE, DEFAULT_PAGE.toString());
+      if (value !== prevValue) {
+        params.delete(QueryParameters.PAGE);
+        params.set(QueryParameters.PAGE, DEFAULT_PAGE.toString());
+      }
+
+      if (value) {
+        params.append('search', value);
+      }
+      const apiUrl = `${API_URL}?${params}`;
+
+      return await httpClient(apiUrl);
     }
-
-    if (searchTerm) {
-      params.append('search', searchTerm);
-    }
-
-    const apiUrl = `${API_URL}?${params}`;
-
-    return await httpClient(apiUrl);
   } catch (e) {
     const error = e as AxiosError;
     const response: AxiosResponse | undefined = error.response;

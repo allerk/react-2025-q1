@@ -10,7 +10,7 @@ import { IResult } from '../domain/IResults.ts';
 import getDataFromApi from '../services/getDataFromApi.ts';
 
 const initState = <T>(): IResult<T> => ({
-  paginationData: null,
+  responseData: null,
   statusData: {
     isLoading: false,
     isStart: true, // is needed to prevent rendering 'not found message' at the beginning
@@ -20,7 +20,8 @@ const initState = <T>(): IResult<T> => ({
 
 const useFetchResults = <T>(
   value: string,
-  page?: string | null
+  page?: string | null,
+  details: boolean = false
 ): IResult<T> => {
   const [paginationData, setPaginationData] = useState<IResult<T>>(() =>
     initState<T>()
@@ -41,6 +42,7 @@ const useFetchResults = <T>(
     }));
     try {
       const data: T | null = await getDataFromApi<T>(
+        details,
         value,
         page,
         prevSearch.current
@@ -48,7 +50,7 @@ const useFetchResults = <T>(
       prevSearch.current = value;
       setPaginationData((prevState: IResult<T>) => ({
         ...prevState,
-        paginationData: data,
+        responseData: data,
         statusData: {
           ...prevState.statusData,
           results: data,
@@ -66,11 +68,11 @@ const useFetchResults = <T>(
         },
       }));
     }
-  }, [page, value]);
+  }, [details, page, value]);
 
   useEffect(() => {
     handleSearch();
-  }, [value, page, handleSearch]);
+  }, [value, page, handleSearch, details]);
 
   return paginationData as IResult<T>;
 };

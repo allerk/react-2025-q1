@@ -5,6 +5,6 @@ export interface IStatus {
 }
 
 export interface IResult<T> {
-  paginationData?: T | null;
+  responseData?: T | null;
   statusData: IStatus;
 }

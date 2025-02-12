@@ -8,10 +8,10 @@ import Card from '../card/Card.tsx';
 import Pagination from '../pagination/Pagination.tsx';
 
 interface IProps {
-  paginatedData: PaginatedResponse<CharacterInfo>;
+  responseData: PaginatedResponse<CharacterInfo>;
 }
 
-const CardList = ({ paginatedData }: IProps): ReactNode => {
+const CardList = ({ responseData }: IProps): ReactNode => {
   const calculatePages = useCallback((number: number): number => {
     if (number < 10) {
       return 1;
@@ -24,13 +24,13 @@ const CardList = ({ paginatedData }: IProps): ReactNode => {
     <>
       <Pagination
         pageInfo={{
-          next: paginatedData.next,
-          previous: paginatedData.previous,
-          totalPages: calculatePages(paginatedData.count),
+          next: responseData.next,
+          previous: responseData.previous,
+          totalPages: calculatePages(responseData.count),
         }}
       />
       <ul className="flex justify-center items-stretch flex-wrap">
-        {paginatedData.results.map((item) => (
+        {responseData.results.map((item) => (
           <Card key={item.name} item={item}></Card>
         ))}
       </ul>
