@@ -20,7 +20,7 @@ const Main = (): ReactNode => {
   const currentPage: string | null = searchParams.get(QueryParameters.PAGE);
 
   useEffect(() => {
-    if (!currentPage) {
+    if (!currentPage || Number(currentPage) < 1) {
       searchParams.set(QueryParameters.PAGE, DEFAULT_PAGE.toString());
       setSearchParams(searchParams);
     }
