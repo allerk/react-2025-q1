@@ -26,7 +26,7 @@ const Pagination = ({ pageInfo }: IProps) => {
             <h1 className="font-bold my-2 text-center">Page:</h1>
             <div className="flex w-full items-center">
               <button
-                id="decrement"
+                id="prev"
                 className={`${
                   currentPage === 1
                     ? 'bg-gray-400 cursor-not-allowed'
@@ -35,14 +35,15 @@ const Pagination = ({ pageInfo }: IProps) => {
                 type="submit"
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
+                data-testid="prev"
               >
                 Prev
               </button>
-              <div className="py-2 text-center m-2">
+              <div className="py-2 text-center m-2" data-testid="currentPage">
                 {currentPage}/{pageInfo.totalPages}
               </div>
               <button
-                id="increment"
+                id="next"
                 className={`${
                   pageInfo.totalPages === currentPage
                     ? 'bg-gray-400 cursor-not-allowed'
@@ -51,6 +52,7 @@ const Pagination = ({ pageInfo }: IProps) => {
                 type="submit"
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={pageInfo.totalPages === currentPage}
+                data-testid="next"
               >
                 Next
               </button>
