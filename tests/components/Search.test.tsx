@@ -54,4 +54,22 @@ describe('Search Component', () => {
     const searchInput = screen.getByTestId('searchFormInput');
     expect(searchInput).toHaveValue('luke');
   });
+
+  it('should set local storage search query when button is clicked', async () => {
+    const mockChange = vi.fn();
+    localStorage.clear();
+    const { user } = setup(
+      <MemoryRouter>
+        <Search handleChange={mockChange} storedValue={''} />
+      </MemoryRouter>
+    );
+    const input = screen.getByTestId('searchFormInput');
+    await user.type(input, 'luke');
+
+    const submitButton = screen.getByTestId('submitButton');
+
+    await user.click(submitButton);
+    expect(mockChange).toBeCalled();
+    expect(localStorage.getItem('searchTerm_allerk'), 'luke');
+  });
 });
