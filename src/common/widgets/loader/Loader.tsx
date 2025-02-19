@@ -10,7 +10,7 @@ const Loader = ({ isLoading, children }: IProps): ReactNode => {
   if (isLoading) {
     return (
       <div className="md:container md:mx-auto flex justify-center h-full items-center">
-        <div className="loader"></div>
+        <div className="loader" data-testid="loader"></div>
       </div>
     );
   }
