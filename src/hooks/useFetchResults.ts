@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { AxiosError } from 'axios';
 import { IResult } from '../domain/IResults.ts';
-import getDataFromApi from '../services/getDataFromApi.ts';
+import { getDataFromApi } from '../services/getDataFromApi.ts';
 
 const initState = <T>(): IResult<T> => ({
   responseData: null,
