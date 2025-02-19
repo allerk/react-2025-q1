@@ -3,7 +3,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { QueryParameters } from '../common/enums/query-parameters.ts';
 import httpClient from './httpClient.ts';
 
-const getDataFromApi = async <T>(
+export const getDataFromApi = async <T>(
   isDetails: boolean,
   value: string,
   page?: string | null,
@@ -40,5 +40,3 @@ const getDataFromApi = async <T>(
     return null;
   }
 };
-
-export default getDataFromApi;
