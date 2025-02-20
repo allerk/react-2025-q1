@@ -20,6 +20,14 @@ const CardList = ({ responseData }: IProps): ReactNode => {
     return (number / 10) % 1 !== 0 ? Math.floor(number / 10) + 1 : number / 10;
   }, []);
 
+  if (responseData.results.length === 0) {
+    return (
+      <div className="flex justify-center">
+        <p>Nothing was found. Try again!</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <Pagination

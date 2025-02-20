@@ -3,22 +3,15 @@ import { Outlet, useSearchParams } from 'react-router';
 import { QueryParameters } from '../../common/enums/query-parameters.ts';
 import Loader from '../../common/widgets/loader/Loader.tsx';
 import './Results.css';
+import { IStatus } from '../../domain/IResults.ts';
+import ErrorFallback from '../../common/widgets/errors/ErrorFallback.tsx';
 
 interface IProps {
   children: ReactNode;
-  isFound: boolean;
-  isLoading: boolean;
-  isStart: boolean;
-  serverError: string | null;
+  statusData: IStatus;
 }
 
-const Results = ({
-  children,
-  isFound,
-  isLoading,
-  isStart,
-  serverError,
-}: IProps): ReactNode => {
+const Results = ({ children, statusData }: IProps): ReactNode => {
   const [error, setError] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -39,6 +32,14 @@ const Results = ({
     }
   };
 
+  if (statusData.isLoading) {
+    return <Loader />;
+  }
+
+  if (statusData.serverError) {
+    return <ErrorFallback message={statusData.serverError} />;
+  }
+
   return (
     <section className="items-start justify-center">
       <div className="md:container md:mx-auto">
@@ -47,21 +48,15 @@ const Results = ({
             className={`transition-all duration-300 ${isDetails ? 'w-2/3' : 'w-full'}`}
             onClick={handleCloseDetails}
           >
-            <Loader isLoading={isLoading}>
-              {serverError ? (
-                <div className="flex justify-center">
-                  <p>{serverError}</p>
-                </div>
-              ) : isFound ? (
-                children
-              ) : !isLoading && !isStart ? (
-                <div className="flex justify-center">
-                  <p>Nothing was found. Try again!</p>
-                </div>
-              ) : null}
-            </Loader>
+            {children}
           </div>
-          {isDetails && <Outlet />}
+          {isDetails && (
+            <div className="w-1/3">
+              <div className="sticky top-20 right-20">
+                <Outlet />
+              </div>
+            </div>
+          )}
         </div>
         <div className="flex justify-end">
           <button

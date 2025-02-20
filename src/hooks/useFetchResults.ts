@@ -13,7 +13,6 @@ const initState = <T>(): IResult<T> => ({
   responseData: null,
   statusData: {
     isLoading: false,
-    isStart: true, // is needed to prevent rendering 'not found message' at the beginning
     serverError: null,
   },
 });
@@ -34,7 +33,6 @@ const useFetchResults = <T>(
       statusData: {
         ...prevState.statusData,
         isLoading: true,
-        isStart: false,
         serverError: null,
       },
     }));

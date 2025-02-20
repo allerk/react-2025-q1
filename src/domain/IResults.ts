@@ -1,6 +1,5 @@
 export interface IStatus {
   isLoading: boolean;
-  isStart: boolean;
   serverError: string | null;
 }
 

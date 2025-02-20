@@ -36,14 +36,7 @@ const Main = (): ReactNode => {
         <Search storedValue={storedValue} handleChange={handleChange} />
       </Header>
       <div className="split-line"></div>
-      <Results
-        isFound={
-          !!results.responseData && results.responseData.results.length > 0
-        }
-        isLoading={results.statusData.isLoading}
-        isStart={results.statusData.isStart}
-        serverError={results.statusData.serverError}
-      >
+      <Results statusData={results.statusData}>
         {results.responseData ? (
           <CardList responseData={results.responseData}></CardList>
         ) : null}
