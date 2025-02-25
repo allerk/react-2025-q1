@@ -1,0 +1,6 @@
+.input-style {
+  padding: 0.35rem; /* Padding inside the input */
+  border-radius: 0.75rem; /* Rounded corners */
+  outline: none; /* Removes the default focus outline */
+  background-color: #c9c1c1;
+}
